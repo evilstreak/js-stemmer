@@ -6,12 +6,6 @@ var Stemmer = {
   stem: function( word ) {
     word = word.toLowerCase();
 
-    // check if this word has already been stemmed
-    if ( this.cache[ word ] ) {
-      print( "Retrieving cached word" );
-      return this.cache[ word ];
-    }
-
     var stem = word;
 
     var contains_vowel = /[aeiou]|[^aeiou]y/;
@@ -109,7 +103,6 @@ var Stemmer = {
       }
     }
 
-    this.cache[ word ] = stem;
     return stem;
   },
 
@@ -173,10 +166,7 @@ var Stemmer = {
     u: { ous: "" },
     v: { ive: "" },
     z: { ize: "" }
-  },
-
-  // used to remember results for words already stemmed
-  cache: {}
+  }
 }
 
 // CommonJS export
