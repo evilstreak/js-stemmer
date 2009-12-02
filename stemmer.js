@@ -16,9 +16,9 @@ var Stemmer = {
     var stem = word;
 
     var contains_vowel = /[aeiou]|[^aeiou]y/;
-    var m_gt_0 = /^(?:[^aeiou][^aeiouy]*)?([aeiouy]+[^aeiou][^aeiouy]*){1,}([aeiouy][aeiou]*)?$/;
-    var m_eq_1 = /^(?:[^aeiou][^aeiouy]*)?([aeiouy]+[^aeiou][^aeiouy]*){1}([aeiouy][aeiou]*)?$/;
-    var m_gt_1 = /^(?:[^aeiou][^aeiouy]*)?([aeiouy]+[^aeiou][^aeiouy]*){2,}([aeiouy][aeiou]*)?$/;
+    var m_gt_0 = /^([^aeiou][^aeiouy]*([aeiouy]+[^aeiou][^aeiouy]*)|([aeiou]+[^aeiou][^aeiouy]*))([aeiouy]+[^aeiou][^aeiouy]*)*([aeiouy][aeiou]*)?$/;
+    var m_eq_1 = /^([^aeiou][^aeiouy]*([aeiouy]+[^aeiou][^aeiouy]*)|([aeiou]+[^aeiou][^aeiouy]*))([aeiouy][aeiou]*)?$/;
+    var m_gt_1 = /^([^aeiou][^aeiouy]*([aeiouy]+[^aeiou][^aeiouy]*)|([aeiou]+[^aeiou][^aeiouy]*))([aeiouy]+[^aeiou][^aeiouy]*)+([aeiouy][aeiou]*)?$/;
 
     var ends_o = /[^aeiou][aeiouy][^aeiouwxy]$/;
 
