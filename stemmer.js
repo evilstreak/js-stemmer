@@ -71,18 +71,18 @@ var Stemmer = {
 
     // steps 2, 3 and 4
     var steps = [
-      [ this.step2_suffixes, -2 ],
-      [ this.step3_suffixes, -1 ],
-      [ this.step4_suffixes, -2 ]
+      [ this.step2_suffixes, -2, m_gt_0 ],
+      [ this.step3_suffixes, -1, m_gt_0 ],
+      [ this.step4_suffixes, -2, m_gt_1 ]
     ];
 
-    for each ( [suffixes, char_pos] in steps ) {
+    for each ( [suffixes, char_pos, measure] in steps ) {
       suffixes = suffixes[ stem.substr( char_pos, 1 ) ];
       for ( var suf in suffixes ) {
         var suffix_replace = new RegExp( "(.*)" + suf + "$" );
         if ( suffix_replace.test( stem ) ) {
           var prefix = suffix_replace.exec( stem )[ 1 ];
-          if ( m_gt_0.test( prefix ) ) {
+          if ( measure.test( prefix ) ) {
             stem = prefix + suffixes[ suf ];
             break;
           }
