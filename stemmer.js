@@ -6,6 +6,8 @@ var Stemmer = {
   stem: function( word ) {
     word = word.toLowerCase();
 
+    this.log( "Stemming", word );
+
     // skip anything with length 1 or 2
     if ( word.length <= 2 ) {
       return word;
@@ -26,8 +28,10 @@ var Stemmer = {
 
     if ( es_end.test( stem ) ) {
       stem = stem.replace( es_end, "$1" );
+      this.log( "Matched es_end =>", stem );
     } else if ( s_end.test( stem ) ) {
       stem = stem.replace( s_end, "$1" );
+      this.log( "Matched s_end =>", stem );
     }
 
     // step 1b
@@ -38,11 +42,15 @@ var Stemmer = {
       var prefix = eed_end.exec( stem )[ 1 ];
       if ( m_gt_0.test( prefix ) ) {
         stem = prefix + "ee";
+        this.log( "Matched eed_end and m_gt_0 =>", stem );
       }
+      else this.log( "Matched eed_end but not m_gt_0" );
     } else if ( eding_end.test( stem ) ) {
       var prefix = eding_end.exec( stem )[ 1 ];
       if ( contains_vowel.test( prefix ) ) {
         stem = prefix;
+
+        this.log( "Matched eding_end and contains_vowel =>", stem );
 
         // step 1b followup
         var fix_suffix = /(at|bl|iz|is)$/;
@@ -50,12 +58,16 @@ var Stemmer = {
 
         if ( fix_suffix.test( stem ) ) {
           stem = stem + "e";
+          this.log( "Matched fix_suffix =>", stem );
         } else if ( double_consonant.test( stem ) ) {
           stem = stem.replace( double_consonant, "$1" );
+          this.log( "Matched double_consonant =>", stem );
         } else if ( m_eq_1.test( stem ) && ends_o.test( stem ) ) {
           stem = stem + "e";
+          this.log( "Matched m_eq_1 and ends_o =>", stem );
         }
       }
+      else this.log( "Matched eding_end but not contains_vowel" );
     }
 
     // step 1c
@@ -65,7 +77,9 @@ var Stemmer = {
       var prefix = y_end.exec( stem )[ 1 ];
       if ( contains_vowel.test( prefix ) ) {
         stem = prefix + "i";
+        this.log( "Matched y_end and contains_vowel =>", stem );
       }
+      else this.log( "Matched y_end but not contains_vowel" );
     }
 
     // steps 2, 3 and 4
@@ -84,7 +98,9 @@ var Stemmer = {
           if ( measure.test( prefix ) ) {
             stem = prefix + suffixes[ suf ];
             break;
+            this.log( "Matched", suf, "and", measure, "=>", stem );
           }
+          else this.log( "Matched", suf, "but not", measure );
         }
       }
     }
@@ -95,10 +111,13 @@ var Stemmer = {
       var prefix = e_end.exec( stem )[ 1 ];
       if ( m_gt_1.test( prefix ) ) {
         stem = prefix;
+        this.log( "Matched e_end and m_gt_1 =>", stem );
       }
       else if ( m_eq_1.test( prefix ) && !ends_o.test( prefix ) ) {
         stem = prefix;
+        this.log( "Matched e_end and m_eq_1 and !ends_o =>", stem );
       }
+      else this.log( "Matched e_end but not m_gt_1/m_eq_1+[^o]$" );
     }
 
     // step 5b
@@ -107,7 +126,9 @@ var Stemmer = {
       var prefix = double_l.exec( stem )[ 1 ];
       if ( m_gt_1.test( prefix ) ) {
         stem = prefix;
+        this.log( "Matched double_l and m_gt_1 =>", stem );
       }
+      else this.log( "Matched double_l but not m_gt_1" );
     }
 
     return stem;
@@ -173,6 +194,9 @@ var Stemmer = {
     u: { ous: "" },
     v: { ive: "" },
     z: { ize: "" }
+
+  log: function() {
+    // print.apply( this, arguments );
   }
 }
 
