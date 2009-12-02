@@ -6,6 +6,11 @@ var Stemmer = {
   stem: function( word ) {
     word = word.toLowerCase();
 
+    // skip anything with length 1 or 2
+    if ( word.length <= 2 ) {
+      return word;
+    }
+
     var stem = word;
 
     var contains_vowel = /[aeiou]|[^aeiou]y/;
