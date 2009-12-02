@@ -117,7 +117,7 @@ var Stemmer = {
         stem = prefix;
         this.log( "Matched e_end and m_eq_1 and !ends_o =>", stem );
       }
-      else this.log( "Matched e_end but not m_gt_1/m_eq_1+[^o]$" );
+      else this.log( "Matched e_end but not m_gt_1 or m_eq_1 + *o$" );
     }
 
     // step 5b
