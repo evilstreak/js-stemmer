@@ -18,6 +18,8 @@ var Stemmer = {
     var m_eq_1 = /^(?:[^aeiou][^aeiouy]*)?([aeiouy]+[^aeiou][^aeiouy]*){1}([aeiouy][aeiou]*)?$/;
     var m_gt_1 = /^(?:[^aeiou][^aeiouy]*)?([aeiouy]+[^aeiou][^aeiouy]*){2,}([aeiouy][aeiou]*)?$/;
 
+    var ends_o = /[^aeiou][aeiouy][^aeiouwxy]$/;
+
     // step 1a
     var es_end = /(ss|i)es$/;
     var s_end = /([^s])s$/;
@@ -45,16 +47,13 @@ var Stemmer = {
         // step 1b followup
         var fix_suffix = /(at|bl|iz|is)$/;
         var double_consonant = /([^aeioulsz])\1$/;
-        var missing_e = /[^aeiouy][aeiouy][^aeiouy]$/;
 
         if ( fix_suffix.test( stem ) ) {
           stem = stem + "e";
         } else if ( double_consonant.test( stem ) ) {
           stem = stem.replace( double_consonant, "$1" );
-        } else if ( missing_e.test( stem ) ) {
-          if ( m_eq_1.test( stem ) ) {
-            stem = stem + "e";
-          }
+        } else if ( m_eq_1.test( stem ) && ends_o.test( stem ) ) {
+          stem = stem + "e";
         }
       }
     }
@@ -94,7 +93,10 @@ var Stemmer = {
     var e_end = /(.*)e$/;
     if ( e_end.test( stem ) ) {
       var prefix = e_end.exec( stem )[ 1 ];
-      if ( m_gt_1.test( prefix ) || ( m_eq_1.test( prefix ) && /[^o]$/.test( prefix ) ) ) {
+      if ( m_gt_1.test( prefix ) ) {
+        stem = prefix;
+      }
+      else if ( m_eq_1.test( prefix ) && !ends_o.test( prefix ) ) {
         stem = prefix;
       }
     }
