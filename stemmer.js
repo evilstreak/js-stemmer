@@ -97,10 +97,10 @@ var Stemmer = {
           var prefix = suffix_replace.exec( stem )[ 1 ];
           if ( measure.test( prefix ) ) {
             stem = prefix + suffixes[ suf ];
-            break;
             this.log( "Matched", suf, "and", measure, "=>", stem );
           }
           else this.log( "Matched", suf, "but not", measure );
+          break;
         }
       }
     }
