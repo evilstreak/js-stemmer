@@ -92,7 +92,7 @@ var Stemmer = {
     for each ( [suffixes, char_pos, measure] in steps ) {
       suffixes = suffixes[ stem.substr( char_pos, 1 ) ];
       for ( var suf in suffixes ) {
-        var suffix_replace = new RegExp( "(.*)" + suf + "$" );
+        var suffix_replace = new RegExp( suf + "$" );
         if ( suffix_replace.test( stem ) ) {
           var prefix = suffix_replace.exec( stem )[ 1 ];
           if ( measure.test( prefix ) ) {
@@ -136,64 +136,65 @@ var Stemmer = {
 
   // grouped by penulimate letter
   step2_suffixes: {
-    a: { ational: "ate",
-         tional: "tion" },
-    c: { enci: "ence",
-         anci: "ance" },
-    e: { izer: "ize",
-         iser: "ise" },
-    l: { abli: "able",
-         alli: "al",
-         entli: "ent",
-         eli: "e",
-         ousli: "ous" },
-    i: { ization: "ize" },
-    o: { ation: "ate",
-         ator: "ate" },
-    s: { alism: "al",
-         iveness: "ive",
-         fulness: "ful",
-         ousness: "ous" },
-    t: { aliti: "al",
-         iviti: "ive",
-         biliti: "ble" }
+    a: { "(.*)ational": "ate",
+         "(.*)tional": "tion" },
+    c: { "(.*)enci": "ence",
+         "(.*)anci": "ance" },
+    e: { "(.*)izer": "ize",
+         "(.*)iser": "ise" },
+    g: { "(.*)logi": "log" },
+    l: { "(.*)bli": "ble",
+         "(.*)alli": "al",
+         "(.*)entli": "ent",
+         "(.*)eli": "e",
+         "(.*)ousli": "ous" },
+    i: { "(.*)ization": "ize" },
+    o: { "(.*)ation": "ate",
+         "(.*)ator": "ate" },
+    s: { "(.*)alism": "al",
+         "(.*)iveness": "ive",
+         "(.*)fulness": "ful",
+         "(.*)ousness": "ous" },
+    t: { "(.*)aliti": "al",
+         "(.*)iviti": "ive",
+         "(.*)biliti": "ble" }
   },
 
   // grouped by final letter
   step3_suffixes: {
-    e: { icate: "ic",
-         ative: "",
-         alize: "al",
-         alise: "al" },
-    i: { iciti: "ic" },
-    l: { ical: "ic",
-         ful: "" },
-    s: { ness: "" }
+    e: { "(.*)icate": "ic",
+         "(.*)ative": "",
+         "(.*)alize": "al",
+         "(.*)alise": "al" },
+    i: { "(.*)iciti": "ic" },
+    l: { "(.*)ical": "ic",
+         "(.*)ful": "" },
+    s: { "(.*)ness": "" }
   },
 
   // grouped by penultimate letter
   step4_suffixes: {
-    a: { al: "" },
-    c: { ance: "",
-         ence: "" },
-    e: { er: "" },
-    i: { ic: "" },
-    l: { able: "",
-         ible: "" },
-    n: { ant: "",
-         ement: "",
-         ment: "",
-         ent: "" },
-    o: { sion: "s",
-         tion: "t",
-         ou: "" },
-    s: { ise: "",
-         ism: "" },
-    t: { ate: "",
-         iti: "" },
-    u: { ous: "" },
-    v: { ive: "" },
-    z: { ize: "" }
+    a: { "(.*)al": "" },
+    c: { "(.*)ance": "",
+         "(.*)ence": "" },
+    e: { "(.*)er": "" },
+    i: { "(.*)ic": "" },
+    l: { "(.*)able": "",
+         "(.*)ible": "" },
+    n: { "(.*)ant": "",
+         "(.*)ement": "",
+         "(.*)ment": "",
+         "(.*)ent": "" },
+    o: { "(.*s)ion": "",
+         "(.*t)ion": "",
+         "(.*)ou": "" },
+    s: { "(.*)ism": "" },
+    t: { "(.*)ate": "",
+         "(.*)iti": "" },
+    u: { "(.*)ous": "" },
+    v: { "(.*)ive": "" },
+    z: { "(.*)ize": "" }
+  },
 
   log: function() {
     // print.apply( this, arguments );
